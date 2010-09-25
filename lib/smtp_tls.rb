@@ -12,7 +12,13 @@ Net::SMTP.class_eval do
 
   def start( helo = 'localhost.localdomain',
              user = nil, secret = nil, authtype = nil ) # :yield: smtp
-    start_method = starttls_auto? ? :do_tls_start : :do_start
+
+    if respond_to?(:starttls_auto?)
+      start_method = starttls_auto? ? :do_tls_start : :do_start
+    else
+      start_method = :do_tls_start
+    end
+
     if block_given?
       begin
         send(start_method, helo, user, secret, authtype)
