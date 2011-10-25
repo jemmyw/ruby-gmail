@@ -54,6 +54,9 @@ class Gmail
   end
   alias :mailbox :label
 
+  # don't mark emails as read on the server when downloading them
+  attr_accessor :peek
+
   ###########################
   #  MAKING EMAILS
   # 

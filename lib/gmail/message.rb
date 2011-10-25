@@ -93,8 +93,10 @@ class Gmail
     def message
       return @mail if @mail
       require 'mail'
-      _body = @gmail.in_mailbox(@mailbox) { @gmail.imap.uid_fetch(uid, "RFC822")[0].attr["RFC822"] }
-      @mail = Mail.new(_body)
+      request,part = 'RFC822','RFC822'
+      request,part = 'BODY.PEEK[]','BODY[]' if @gmail.peek
+      _body = @gmail.in_mailbox(@mailbox) { @gmail.imap.uid_fetch(uid, request)[0].attr[part] }
+      @message ||= Mail.new(_body)
     end
 
     # Delegate all other methods to the Mail message
