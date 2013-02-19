@@ -1,6 +1,5 @@
 class Gmail
   class Message
-    attr_reader :mail
     def initialize(gmail, mailbox, uid)
       @gmail = gmail
       @mailbox = mailbox
@@ -91,7 +90,6 @@ class Gmail
 
     # Parsed MIME message object
     def message
-      return @mail if @mail
       require 'mail'
       request,part = 'RFC822','RFC822'
       request,part = 'BODY.PEEK[]','BODY[]' if @gmail.peek
