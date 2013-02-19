@@ -1,9 +1,8 @@
 # Notice
-I am looking for for a new project owner for this project.  Please contact me if you are interested in maintaining this 
-project or being added as a contributor.  
 
-Sincerely,  
-[Joshavne Potter](mailto:yourtech@gmail.com?subject=ruby-gmail%20gem%20support)
+First, I have pushed verion 0.3.0 to rubygems.org (Yay, thanks Nick Quaranto for the help) which is a build straight from master.
+
+Second, this gem needs to get back on track. I am looking for people to help go through issues and fix bugs. I want to push a solid, stable release first, then look at charting out the future of the gem. Please email me at <myobie@gmail.com> if you want to help or just get started on the issues.
 
 # ruby-gmail
 
@@ -106,14 +105,6 @@ A Rubyesque interface to Gmail, with all the tools you'll need. Search, read and
       end
     end
 
-    # Save just the first attachment from the newest unread email (assuming pdf)
-    # For #save_to_file:
-    #   + provide a path - save to attachment filename in path
-    #   + provide a filename - save to file specified
-    #   + provide no arguments - save to attachment filename in current directory
-    email = gmail.inbox.emails(:unread).first
-    email.attachments[0].save_to_file("/path/to/location")
-
     # Add a label to a message
     email.label("Faxes")
 
@@ -131,6 +122,7 @@ Creating emails now uses the amazing [Mail](http://rubygems.org/gems/mail) rubyg
         body "Text of plaintext message."
       end
       html_part do
+        content_type 'text/html; charset=UTF-8'
         body "<p>Text of <em>html</em> message.</p>"
       end
       add_file "/path/to/some_image.jpg"

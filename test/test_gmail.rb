@@ -6,34 +6,50 @@ class GmailTest < Test::Unit::TestCase
     Net::IMAP.expects(:new).with('imap.gmail.com', 993, true, nil, false).returns(imap)
     gmail = Gmail.new('test', 'password')
   end
-  
+
   def test_imap_does_login
     setup_mocks(:at_exit => true)
+    res = mock('res')
+    res.expects(:name).at_least(1).returns('OK')
 
     @gmail.imap
     breakdown_mocks
   end
 
   def test_imap_does_login_only_once
-    setup_mocks(:at_exit => true, :login_attempts => 1)
+    setup_mocks(:at_exit => true)
+    res = mock('res')
+    res.expects(:name).at_least(1).returns('OK')
 
+    # @imap.expects(:disconnected?).at_least_once.returns(true).then.returns(false)
+    # TODO: figure why this was here in the first place
+    @imap.expects(:login).with('test@gmail.com', 'password').returns(res)
     @gmail.imap
     @gmail.imap
     @gmail.imap
   end
 
   def test_imap_does_login_without_appending_gmail_domain
-    setup_mocks(:at_exit => true, :user => 'test')
-
-    @gmail.imap
-  end
-  
-  def test_imap_logs_out
     setup_mocks(:at_exit => true)
+    res = mock('res')
+    res.expects(:name).at_least(1).returns('OK')
 
     # @imap.expects(:disconnected?).at_least_once.returns(true).then.returns(false)
-    # @imap.expects(:login).with('test@gmail.com', 'password')
+    # TODO: figure why this was here in the first place
+    @imap.expects(:login).with('test@gmail.com', 'password').returns(res)
     @gmail.imap
+  end
+
+  def test_imap_logs_out
+    setup_mocks(:at_exit => true)
+    res = mock('res')
+    res.expects(:name).at_least(1).returns('OK')
+
+    # @imap.expects(:disconnected?).at_least_once.returns(true).then.returns(false)
+    # TODO: figure why this was here in the first place
+    @imap.expects(:login).with('test@gmail.com', 'password').returns(res)
+    @gmail.imap
+    @imap.expects(:logout).returns(res)
     @gmail.logout
     assert !@gmail.logged_in?
   end
@@ -41,23 +57,30 @@ class GmailTest < Test::Unit::TestCase
   def test_imap_logout_does_nothing_if_not_logged_in
     setup_mocks
 
+    @gmail.expects(:logged_in?).returns(false)
+    @imap.expects(:logout).never
     @gmail.logout
   end
-  
+
   def test_imap_calls_create_label
     setup_mocks(:at_exit => true)
+    res = mock('res')
+    res.expects(:name).at_least(1).returns('OK')
+    # @imap.expects(:disconnected?).at_least_once.returns(true).then.returns(false)
+    # TODO: figure out why this was here in the first place
+    @imap.expects(:login).with('test@gmail.com', 'password').returns(res)
     @imap.expects(:create).with('foo')
     @gmail.create_label('foo')
   end
-  
+
   private
   def setup_mocks(options = {})
     options = {:at_exit => false, :login_attempts => 0, :user => 'test'}.merge(options)
     user_name = options[:user]
     @imap = mock('imap')
-    @res = mock('imap_result')
-    @res.expects(:name).at_least(0).returns("OK")
-    @imap.expects(:login).at_least(options[:login_attempts]).with("#{user_name}@gmail.com", 'password').returns(@res)
+    Net::IMAP.expects(:new).with('imap.gmail.com', 993, true, nil, false).returns(@imap)
+    @gmail = Gmail.new('test@gmail.com', 'password')
+
     # need this for the at_exit block that auto-exits after this test method completes
     @imap.expects(:logout).at_least(0).returns(@res) if options[:at_exit]
     

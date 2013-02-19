@@ -99,6 +99,8 @@ class Gmail
       @message ||= Mail.new(_body)
     end
 
+    private
+    
     # Delegate all other methods to the Mail message
     def method_missing(*args, &block)
       if block_given?
