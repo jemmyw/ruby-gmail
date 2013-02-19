@@ -2,6 +2,8 @@ source 'http://rubygems.org'
 
 gemspec
 
-gem "rake"
-gem "jeweler"
-gem "mocha"
+group :test do
+  gem "rake"
+  gem "jeweler"
+  gem "mocha"
+end

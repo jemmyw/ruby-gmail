@@ -2,11 +2,8 @@ PATH
   remote: .
   specs:
     ruby-gmail (0.3.0)
-      jeweler
       mail (>= 2.2.1)
       mime (>= 0.1)
-      mocha
-      rake
       ruby-gmail
       shared-mime-info
 

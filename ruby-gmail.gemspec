@@ -17,6 +17,8 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".autotest",
+    "Gemfile",
+    "Gemfile.lock",
     "History.txt",
     "Manifest.txt",
     "README.markdown",
@@ -33,7 +35,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://dcparker.github.com/ruby-gmail"
   s.post_install_message = "\n\e[34mIf ruby-gmail saves you TWO hours of work, want to compensate me for, like, a half-hour?\nSupport me in making new and better gems:\e[0m \e[31;4mhttp://pledgie.com/campaigns/7087\e[0m\n\n"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.25"
+  s.rubygems_version = "1.8.24"
   s.summary = "A Rubyesque interface to Gmail, with all the tools you'll need."
 
   if s.respond_to? :specification_version then
@@ -41,26 +43,17 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<ruby-gmail>, [">= 0"])
-      s.add_runtime_dependency(%q<rake>, [">= 0"])
-      s.add_runtime_dependency(%q<jeweler>, [">= 0"])
-      s.add_runtime_dependency(%q<mocha>, [">= 0"])
       s.add_runtime_dependency(%q<shared-mime-info>, [">= 0"])
       s.add_runtime_dependency(%q<mail>, [">= 2.2.1"])
       s.add_runtime_dependency(%q<mime>, [">= 0.1"])
     else
       s.add_dependency(%q<ruby-gmail>, [">= 0"])
-      s.add_dependency(%q<rake>, [">= 0"])
-      s.add_dependency(%q<jeweler>, [">= 0"])
-      s.add_dependency(%q<mocha>, [">= 0"])
       s.add_dependency(%q<shared-mime-info>, [">= 0"])
       s.add_dependency(%q<mail>, [">= 2.2.1"])
       s.add_dependency(%q<mime>, [">= 0.1"])
     end
   else
     s.add_dependency(%q<ruby-gmail>, [">= 0"])
-    s.add_dependency(%q<rake>, [">= 0"])
-    s.add_dependency(%q<jeweler>, [">= 0"])
-    s.add_dependency(%q<mocha>, [">= 0"])
     s.add_dependency(%q<shared-mime-info>, [">= 0"])
     s.add_dependency(%q<mail>, [">= 2.2.1"])
     s.add_dependency(%q<mime>, [">= 0.1"])
