@@ -12,8 +12,10 @@ class GmailTest < Test::Unit::TestCase
     res = mock('res')
     res.expects(:name).at_least(1).returns('OK')
 
+    # @imap.expects(:disconnected?).at_least_once.returns(true).then.returns(false)
+    # TODO: figure why this was here in the first place
+    @imap.expects(:login).with('test@gmail.com', 'password').returns(res)
     @gmail.imap
-    breakdown_mocks
   end
 
   def test_imap_does_login_only_once
@@ -75,20 +77,12 @@ class GmailTest < Test::Unit::TestCase
 
   private
   def setup_mocks(options = {})
-    options = {:at_exit => false, :login_attempts => 0, :user => 'test'}.merge(options)
-    user_name = options[:user]
+    options = {:at_exit => false}.merge(options)
     @imap = mock('imap')
     Net::IMAP.expects(:new).with('imap.gmail.com', 993, true, nil, false).returns(@imap)
     @gmail = Gmail.new('test@gmail.com', 'password')
 
     # need this for the at_exit block that auto-exits after this test method completes
-    @imap.expects(:logout).at_least(0).returns(@res) if options[:at_exit]
-    
-    Net::IMAP.expects(:new).with('imap.gmail.com', 993, true, nil, false).returns(@imap)
-    @gmail = Gmail.new(user_name, 'password')
-  end
-  
-  def breakdown_mocks
-    @gmail.logout
+    @imap.expects(:logout).at_least(0) if options[:at_exit]
   end
 end

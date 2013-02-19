@@ -1,0 +1,49 @@
+PATH
+  remote: .
+  specs:
+    ruby-gmail (0.3.0)
+      jeweler
+      mail (>= 2.2.1)
+      mime (>= 0.1)
+      mocha
+      rake
+      ruby-gmail
+      shared-mime-info
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    git (1.2.5)
+    i18n (0.6.1)
+    jeweler (1.8.4)
+      bundler (~> 1.0)
+      git (>= 1.2.5)
+      rake
+      rdoc
+    json (1.7.7)
+    mail (2.5.3)
+      i18n (>= 0.4.0)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
+    metaclass (0.0.1)
+    mime (0.1)
+    mime-types (1.21)
+    mocha (0.13.2)
+      metaclass (~> 0.0.1)
+    polyglot (0.3.3)
+    rake (10.0.3)
+    rdoc (3.12.1)
+      json (~> 1.4)
+    shared-mime-info (0.1)
+    treetop (1.4.12)
+      polyglot
+      polyglot (>= 0.3.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  jeweler
+  mocha
+  rake
+  ruby-gmail!

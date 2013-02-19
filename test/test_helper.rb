@@ -1,4 +1,7 @@
 require 'test/unit'
 require 'rubygems'
-require 'mocha'
+require 'bundler/setup'
+require 'mocha/setup'
 require 'gmail'
+
+$: << File.expand_path(File.dirname(__FILE__))
